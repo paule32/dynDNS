@@ -1,0 +1,159 @@
+a:link    { color:  white; }
+a:visited { color:  white; }
+a:hover   { color:  black; background-color: white; text-decoration: overline underline; }
+a:active  { color:  black; background-color: white; text-decoration: overline underline; }
+
+#page_container {
+    position: absolute;
+    margin: 0px auto 0px auto;
+    width: 1245px;
+    height: 100%;
+    background-color: silver;
+    border-radius: 20px;
+}
+
+#page_header {
+    text-align: center;
+    line-height: 40px;
+    margin: 10px 20px 20px 10px;
+    height: 84px;
+    background-color: #ffa000;
+    border-radius: 20px;
+}
+
+#page_menu {
+    text-align: center;
+    line-height: 56px;
+    margin: 10px 20px 10px 10px;
+    height: 56px;
+    background-color: #a0a0f0;
+    border-radius: 20px;
+}
+
+#workplace {
+    position: relative;
+    margin: 10px auto 10px auto;
+    width: 98%;
+    height: 70%;
+    background-color: #f0e0f0;
+    border-radius: 20px;
+}
+
+.menu_item {
+    position: absolute;
+    line-height: 35px;
+    top: 126px;
+    height: 35px;
+    width: 140px;
+    border-radius: 20px;
+    background-color: #ffe200;
+}
+.menu_box {
+    position: absolute;
+    text-align: left;
+    line-height: 30px;
+    left: 255px;
+    height: 30px;
+    width: 132px;
+    background-color: #afe200;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+}
+
+#menu_home {
+    left: 50px;
+}
+
+#menu_hilfe { left: 250px; }
+#menu_login { left: 1000px; }
+
+#menu_inhalt { top: 164px; display: none; }
+#menu_ueber  { top: 200px; display: none; }
+
+
+#login_page {
+    position: absolute;
+    top: 100px;
+    left: 300px;
+    height: 300px;
+    width: 400px;
+    background-color: #a0d000;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 20px;
+    display: none;
+}
+
+#login_page_text {
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+
+#login_page_button {
+    position: relative;
+    text-align: center;
+    line-height: 40px;
+    top: 48px;
+    left: 100px;
+    width: 180px;
+    height: 40px;
+    background-color: yellow;
+    border-radius: 20px;
+}
+
+#left_menupanel {
+    color: white;
+    position: relative;
+    float: left;
+    left: 10px;
+    top: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 18px;
+}
+
+#left_menupanel_inner {
+    position: relative;
+    left: 10px;
+    top: 20px;
+}
+
+#right_menupanel {
+    position: relative;
+    color: white;
+    float: right;
+    left: -10px;
+    top: 10px;
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 18px;
+}
+
+#middle_menupanel {
+    position: relative;
+    float: right;
+    left: -30px;
+    top: 10px;
+    width: 764px;
+    height: 400px;
+    color: black;
+    background-color: cyan;
+    border-color: white;
+    border-width: 2px;
+    border-radius: 18px;
+}
+#middle_menupanel_inner {
+    position: relative;
+    border-width: 6px;
+    border-color: black;
+    left: 10px;
+    top: 10px;
+}
