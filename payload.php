@@ -1,5 +1,5 @@
 <html><head>
-<meta http-equiv="Content-Type: content=text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>dynDNS 1.0 - dynamic DNS 1.0</title></head><body><?php
 echo "Bitte warten, Sie werden weitergeleitet...<p>";
 
@@ -95,10 +95,11 @@ try {
            "VALUES(:id,:udom,:demo,:flag);"));
     $res->execute([$usid,$udom,$demo,$flag]);
     echo "SubDomain ist verf&uuml;gbar!<br>";
+    header("Refresh:4;URL=http://" . $baseURL . "/index.php?init=ok&pd=" . $udom . "&em=" . $mail);
   }
   else {
     echo "SubDomain ist vergeben ! $udom<br>";
-    header("Refresh:4;URL=http://" . $baseURL . "/main.php?init=ok");
+    header("Refresh:4;URL=http://" . $baseURL . "/index.php");
     return;
   }
 } catch (PDOException $e) {

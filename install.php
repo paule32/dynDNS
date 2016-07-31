@@ -16,8 +16,14 @@ try {
   . "udom VARCHAR(256),"
   . "demo VARCHAR(10),"
   . "flag VARCHAR(1)"
-  . ")");
+  . ");");
 
+/*
+  $res = $dbh->query("CREATE TABLE IF NOT EXISTS hd_update ("
+  . "id INTEGER,"
+  . "pubID VARCHAR(20),"
+  . ");");
+*/
 } catch (PDOException $e) {
   echo "error: " . $e;
   die(1);
