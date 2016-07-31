@@ -1,6 +1,6 @@
 <?php
 try {
-  $dbh = new PDO('sqlite:/var/www/data/hd_data.db');
+  $dbh = new PDO('sqlite:/var/www/kallup.net/users/jkallup/data/hd_data.db');
   $res = $dbh->query("CREATE TABLE IF NOT EXISTS hd_users ("
   . "id INTEGER PRIMARY KEY AUTOINCREMENT,"
   . "user VARCHAR(30),"

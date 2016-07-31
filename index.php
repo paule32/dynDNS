@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="de">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<meta http-equiv="Content-Type: content=text/html; utf-8"/>
 <title>dynDNS 1.0 - dynamic DNS</title>
 <script type="text/javascript" src="./js/jquery-3.0.0.min.js"></script>
 <script type="text/javascript" src="./onload.js"></script>
@@ -32,7 +32,7 @@
         <b><font style="color:yellow;">TEAM</font></b>
         <hr>
         <b>.: Beitretten :.</b><br>
-        <b>.: Gründen :.</b>
+        <b>.: Gr&uuml;nden :.</b>
         </center>
       </div>
       <div id="middle_menupanel">
@@ -40,9 +40,30 @@
 	<?php
 if (!isset($_GET['pay']))
 {
-echo
+  if ((isset($_SERVER['HTTP_REFERER'])
+  && $_SERVER['HTTP_REFERER'] == "http://kallup.net/dns/payload.php")
+  && (isset($_GET['init'])
+  && $_GET['init'] === "ok"))
+  {
+  echo
+  "<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">".
+  "<input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\">".
+  "<input type=\"hidden\" name=\"hosted_button_id\" value=\"E2R4ZHJBRXH6L\">".
+  "<input type=\"hidden\" name=\"item_name\" value=\"dnyDNS - non-profit\">".
+  "<input type=\"hidden\" name=\"return\" value=\"http://www.dns-ip.org/success\">".
+  "<input type=\"hidden\" name=\"on0\" value=\"E-Mail nicht vergessen!!!\">".
+  "<input type=\"hidden\" name=\"on1\" value=\"'pd'\">E-Mail:<br/>".
+  "<input type=\"text\"   name=\"os0\" maxlength=\"60\"><br/>".
+  "<input type=\"image\" src=\"https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif\" ".
+  " border=\"0\" name=\"submit\" alt=\"Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.\">".
+  "<img alt=\"\" border=\"0\" src=\"https://www.paypalobjects.com/de_DE/i/scr/pixel.gif\" width=\"1\" ".
+  "height=\"1\">".
+  "</form>";
+  }
+  else {
+  echo
   "<b>Willkommen bei dynDNS 1.0</b><p><p>" .
-  "Bitte wählen Sie eine Domain aus, auf der Sie erreichbar sein möchten." .
+  "Bitte w&auml;hlen Sie eine Domain aus, auf der Sie erreichbar sein m&ouml;chten." .
   "<form action=\"payload.php?tld=list\" method=\"post\" autocomplete=\"off\">" .
   "Subdomain: <input type=\"text\" id=\"subdomain_name\" name=\"subdomain_name\"><br>".
   "TLD-Domain: <select id=\"list\" name=\"domain_list\">".
@@ -59,22 +80,7 @@ echo
   "Passwort:<br><input type=\"password\" id=\"pass\" name=\"pass\" maxlength=\"60\"><br>".
   "Buddy:<br><input type=\"text\" name=\"user\" maxlength=\"64\"><br><br>".
   "<input type=\"submit\" name=\"action\" value=\"Registrieren\"><form><p>";
-} else {
-echo
-  "<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">".
-  "<input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\">".
-  "<input type=\"hidden\" name=\"hosted_button_id\" value=\"E2R4ZHJBRXH6L\">".
-  "<input type=\"hidden\" name=\"item_name\" value=\"dnyDNS - non-profit\">".
-  "<input type=\"hidden\" name=\"return\" value=\"http://www.dns-ip.org/success\">".
-  "<input type=\"hidden\" name=\"on0\" value=\"E-Mail nicht vergessen!!!\">".
-  "<input type=\"hidden\" name=\"on1\" value=\"'pd'\">E-Mail:<br/>".
-  "<input type=\"text\"   name=\"os0\" maxlength=\"60\"><br/>".
-  "<input type=\"image\" src=\"https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif\" ".
-  " border=\"0\" name=\"submit\" alt=\"Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.\">".
-  "<img alt=\"\" border=\"0\" src=\"https://www.paypalobjects.com/de_DE/i/scr/pixel.gif\" width=\"1\" ".
-  "height=\"1\">".
-  "</form>";
-}
+}}
 ?>
         </div>
       </div>

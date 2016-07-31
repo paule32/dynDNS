@@ -1,12 +1,15 @@
 <html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<meta http-equiv="Content-Type: content=text/html; charset=utf-8"/>
 <title>dynDNS 1.0 - dynamic DNS 1.0</title></head><body><?php
 echo "Bitte warten, Sie werden weitergeleitet...<p>";
+
+$baseURL = "kallup.net/dns";
 
 echo "Ihre SubDomain: " . htmlspecialchars($_POST['subdomain_name']) . htmlspecialchars($_POST['domain_list']);
 echo "<br>";
 echo "Ihre E-Mail: "  . $_POST['email'] . "<br>";
 echo "Ihr Buddy: "    . $_POST['user']  . "<br>";
+echo "Plain: "        . $_POST['pass']  . "<br>";
 echo "Ihr Kennwort: " . md5($_POST['pass']) . "<br>";
 
 if (!isset($_POST['email']) || empty($_POST['email']) || (strlen($_POST['email']) < 1)) { echo "wrong data."; die(1); }
@@ -37,7 +40,7 @@ $last = $curdat;
 $demo = $demdat;
 
 try {
-  $dbh = new PDO('sqlite:/var/www/data/hd_data.db');
+  $dbh = new PDO('sqlite:/var/www/kallup.net/users/jkallup/data/hd_data.db');
   $res = $dbh->prepare("SELECT user,pass FROM hd_users WHERE user=:user AND pass=:pass;");
   $res->execute([$user,$pass]);
   $arr = $res->fetchAll();
@@ -56,9 +59,13 @@ try {
     $res->execute([$user]);
     $arr = $res->fetchAll();
 
+    if (count($arr) < 1) {
+      $usid = 1;
+    } else {
+      $usid = $arr[0]['id'];
+    }
+
     echo "User... added<br>";
-    $usid = $arr[0]['id'];
-    $usid = $usid + 1;
   }
 
   if ($usid < 1) {
@@ -91,10 +98,19 @@ try {
   }
   else {
     echo "SubDomain ist vergeben ! $udom<br>";
+    header("Refresh:4;URL=http://" . $baseURL . "/main.php?init=ok");
     return;
   }
 } catch (PDOException $e) {
   echo "error: " . $e;
   die(1);
+}
+
+function checkEmailAdress($email_address)
+{
+  $s = '/^[A-Z0-9._-]+@[A-Z0-9][A-Z0-9.-]{0,61}[A-Z0-9]\.[A-Z.]{2,6}$/i';
+  if(preg_match($s, $email_address))
+  return true ;
+  return false;
 }
 ?></body></html>
