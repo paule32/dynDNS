@@ -4,7 +4,7 @@ try {
   $res = $dbh->query("CREATE TABLE IF NOT EXISTS hd_users ("
   . "id INTEGER PRIMARY KEY AUTOINCREMENT,"
   . "user VARCHAR(30),"
-  . "pass VARCHAR(30),"
+  . "pass VARCHAR(90),"
   . "udom VARCHAR(256),"
   . "demo VARCHAR(10),"
   . "mail VARCHAR(60),"

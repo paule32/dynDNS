@@ -4,13 +4,14 @@
 echo "Bitte warten, Sie werden weitergeleitet...<p>";
 
 $baseURL = "kallup.net/dns";
+$options = ['cost' => 12, ];
 
 echo "Ihre SubDomain: " . htmlspecialchars($_POST['subdomain_name']) . htmlspecialchars($_POST['domain_list']);
 echo "<br>";
 echo "Ihre E-Mail: "  . $_POST['email'] . "<br>";
 echo "Ihr Buddy: "    . $_POST['user']  . "<br>";
 echo "Plain: "        . $_POST['pass']  . "<br>";
-echo "Ihr Kennwort: " . md5($_POST['pass']) . "<br>";
+echo "Ihr Kennwort: " . password_hash($_POST['pass'], PASSWORD_BCRYPT, $options);
 
 if (!isset($_POST['email']) || empty($_POST['email']) || (strlen($_POST['email']) < 1)) { echo "wrong data."; die(1); }
 if (!isset($_POST['user' ]) || empty($_POST['user' ]) || (strlen($_POST['user' ]) < 1)) { echo "wrong data."; die(1); }
@@ -27,7 +28,7 @@ if (!isset($_POST['subdomain_name' ])
 
 $user = $_POST['user' ];
 $mail = $_POST['email'];
-$pass = md5($_POST['pass']);
+$pass = password_hash($_POST['pass'], PASSWORD_BCRYPT, $options);
 $udom = $_POST['subdomain_name'] . $_POST['domain_list'];
 echo "--=> " . $udom . "<br>";
 $usid = 0;
@@ -41,7 +42,8 @@ $demo = $demdat;
 
 try {
   $dbh = new PDO('sqlite:/var/www/kallup.net/users/jkallup/data/hd_data.db');
-  $res = $dbh->prepare("SELECT user,pass FROM hd_users WHERE user=:user AND pass=:pass;");
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $res = $dbh->prepare("SELECT user,pass FROM hd_users WHERE user=:user AND pass=:pass");
   $res->execute([$user,$pass]);
   $arr = $res->fetchAll();
   if(count($arr) < 1)
@@ -50,12 +52,12 @@ try {
     echo "user noch nicht bekannt<br>";
     echo "versuche user check...<br>";
 
-    $res = $dbh->prepare(htmlspecialchars(
+    $res = $dbh->prepare(
            "INSERT INTO hd_users(user,pass,udom,demo,mail,last,flag)" .
-           "VALUES(:user,:pass,:udom,:demo,:mail,:last,:flag);"));
+           "VALUES(:user,:pass,:udom,:demo,:mail,:last,:flag)");
     $res->execute([$user,$pass,$udom,$demo,$mail,$last,$flag]);
 
-    $res = $dbh->prepare(htmlspecialchars("SELECT id,user FROM hd_users WHERE user=:user;"));
+    $res = $dbh->prepare("SELECT id,user FROM hd_users WHERE user=:user");
     $res->execute([$user]);
     $arr = $res->fetchAll();
 
@@ -69,7 +71,7 @@ try {
   }
 
   if ($usid < 1) {
-    $res = $dbh->prepare(htmlspecialchars("SELECT id,user FROM hd_users WHERE user=:user;"));
+    $res = $dbh->prepare("SELECT id,user FROM hd_users WHERE user=:user");
     $res->bindParam(":user",$user,PDO::PARAM_STR,30);
     $res->execute([$user]);
     $arr = $res->fetchAll();
@@ -82,17 +84,17 @@ try {
 
   echo "suche nach SubDomain-Eintrag...<br>";
 
-  $res = $dbh->prepare(htmlspecialchars("SELECT udom FROM hd_domains WHERE udom=:udom;"));
+  $res = $dbh->prepare("SELECT udom FROM hd_domains WHERE udom=:udom");
   $res->execute([$udom]);
   $arr = $res->fetchAll();
 
-  $res = $dbh->prepare(htmlspecialchars("SELECT udom FROM hd_domains WHERE udom=:udom;"));
+  $res = $dbh->prepare("SELECT udom FROM hd_domains WHERE udom=:udom");
   $res->execute([$udom]);
   $arr = $res->fetchAll();
   if (!$arr) {
-    $res = $dbh->prepare(htmlspecialchars("INSERT INTO hd_domains".
+    $res = $dbh->prepare("INSERT INTO hd_domains " .
            "(id,udom,demo,flag)".
-           "VALUES(:id,:udom,:demo,:flag);"));
+           "VALUES(:id,:udom,:demo,:flag);");
     $res->execute([$usid,$udom,$demo,$flag]);
     echo "SubDomain ist verf&uuml;gbar!<br>";
     header("Refresh:4;URL=http://" . $baseURL . "/index.php?init=ok&pd=" . $udom . "&em=" . $mail);
